@@ -8,7 +8,8 @@
   addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(frame)
     console.log("PARENT: sending message")
-    let i = 0;
+    let i = 1;
+    frame.contentWindow.postMessage(`MESSAGE FROM PARENT t=0`)
     setInterval(() => {
       frame.contentWindow.postMessage(`MESSAGE FROM PARENT ${i}`)
       i += 1
