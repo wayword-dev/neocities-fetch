@@ -1,7 +1,6 @@
 const nfetch = (function () {
   let ready = false
   window.addEventListener("message", (e) => {
-    console.log("PARENT: message", e)
     if (event.source !== frame.contentWindow) return
     if (event.data.ready) {
       ready = true

@@ -9,9 +9,5 @@ window.addEventListener("message", async e => {
   },
   false,
 );
-// send the ready message periodically because i think it gets eated :c
-setInterval(() => {
-  console.log("sending ready message")
-  window.parent.postMessage({ready: "true"})
-}, 1000)
+window.parent.postMessage({ready: "true"})
 </script>
