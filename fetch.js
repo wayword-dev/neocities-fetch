@@ -6,7 +6,7 @@ const nfetch = (function () {
   frame.style.height = "0"
   frame.style.border = "0"
   frame.src = "https://wayword-dev.github.io/neocities-fetch/frame.html"
-  addEventListener("DOMContentLoaded", () => {
+  function setup() {}
     document.body.appendChild(frame)
     window.addEventListener("message", (e) => {
       if (event.source !== frame.contentWindow) return
@@ -20,7 +20,14 @@ const nfetch = (function () {
         delete pendingRequests[e.data.requestId]
       }
     })
-  })
+  }
+  if (document.readyState === "interactive" || document.readyState === "complete") {
+    setup()
+  } else {
+    addEventListener("DOMContentLoaded", () => {
+      setup()
+    })
+  }
 
   let requestIdCtr = 0
   let pendingRequests = {}
