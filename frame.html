@@ -3,7 +3,7 @@ window.addEventListener(
   "message",
   (event) => {
     console.log("CHILD: GOT MSG FROM PARENT", event)
-    console.log("CHILD: parent", window.parent.location.toString(), "source", event.source.location.toString(), "eq", window.parent.location.toString() === event.source.location.toString())
+    console.log("CHILD: parent", window.parent.location.toString(), "source", event.source.location.toString(), "eq", window.parent.location.toString() === event.source.location.toString(), window.parent === event.source)
     if (event.source.location.toString() !== window.parent.location.toString()) return console.log("CHILD: Ignoring")
     window.parent.postMessage("hi from ur kid")
   },
