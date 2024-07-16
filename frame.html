@@ -3,7 +3,8 @@ window.addEventListener(
   "message",
   (event) => {
     console.log("CHILD: GOT MSG FROM PARENT", event)
-    console.log("parent", window.parent)
+    console.log("CHILD: parent", window.parent)
+    if (event.src !== window.parent) return console.log("CHILD: Ignoring")
     window.parent.postMessage("hi from ur kid")
     if (event.origin !== "http://example.org:8080") return;
   },

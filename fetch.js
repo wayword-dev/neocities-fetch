@@ -5,9 +5,9 @@
   frame.style.height = "0"
   frame.style.border = "0"
   frame.src = "/neocities-fetch/frame.html"
-  console.log("hi")
   addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(frame)
+    console.log("PARENT: sending message")
     frame.contentWindow.postMessage("MESSAGE FROM PARENT")
     window.addEventListener("message", (e) => {
       if (window.srcElement !== frame) return
