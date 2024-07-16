@@ -9,6 +9,7 @@ const nfetch = (function () {
     document.body.appendChild(frame)
     window.addEventListener("message", (e) => {
       if (event.source !== frame.contentWindow) return
+      console.log("nfetch data recieved, promise resolving")
       pendingRequests[e.data.requestId](e.data.data)
       delete pendingRequests[e.data.requestId]
     })
