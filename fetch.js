@@ -1,5 +1,6 @@
 const nfetch = (function () {
   const frame = document.createElement("iframe")
+  let ready = false
   frame.style.position = "absolute"
   frame.style.width = "0"
   frame.style.height = "0"
@@ -9,14 +10,18 @@ const nfetch = (function () {
     document.body.appendChild(frame)
     window.addEventListener("message", (e) => {
       if (event.source !== frame.contentWindow) return
-      console.log("nfetch data recieved, promise resolving")
-      pendingRequests[e.data.requestId](e.data.data)
-      delete pendingRequests[e.data.requestId]
+      if (event.data.ready) {
+        ready = true
+        for (const req of preDomReqs) {
+          console.log("nfetch dequeued")
+          frame.contentWindow.postMessage(req)
+        }
+      } else {
+        console.log("nfetch data recieved, promise resolving")
+        pendingRequests[e.data.requestId](e.data.data)
+        delete pendingRequests[e.data.requestId]
+      }
     })
-    for (const req of preDomReqs) {
-      console.log("nfetch dequeued")
-      frame.contentWindow.postMessage(req)
-    }
   })
 
   let requestIdCtr = 0
@@ -34,7 +39,7 @@ const nfetch = (function () {
       requestId,
       url
     }
-    if (frame.contentWindow) {
+    if (ready) {
       console.log("nfetch sent to content window")
       frame.contentWindow.postMessage(reqData)
     } else {

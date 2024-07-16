@@ -11,4 +11,5 @@ window.addEventListener("message", async e => {
   },
   false,
 );
+window.parent.postMessage({ready: "true"})
 </script>
