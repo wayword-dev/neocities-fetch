@@ -1,0 +1,11 @@
+<script>
+window.addEventListener(
+  "message",
+  (event) => {
+    console.log("CHILD: GOT MSG FROM PARENT", event)
+    window.postMessage("hi from ur kid")
+    if (event.origin !== "http://example.org:8080") return;
+  },
+  false,
+);
+</script>
