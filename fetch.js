@@ -7,26 +7,19 @@ const nfetch = (function () {
   frame.src = "/neocities-fetch/frame.html"
   addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(frame)
-    // console.log("PARENT: sending message")
-    // let i = 1;
-    // frame.contentWindow.postMessage(`MESSAGE FROM PARENT t=0`)
-    // setInterval(() => {
-    //   frame.contentWindow.postMessage(`MESSAGE FROM PARENT ${i}`)
-    //   i += 1
-    // }, 3000)
     window.addEventListener("message", (e) => {
-      // console.log("PARENT:", e)
-      if (event.source !== frame.contentWindow) return // console.log("PARENT: ignroing", event.source, frame.contentWindow)
-      console.log("PARENT:", e)
-      const data = e.data
-      console.log("PARENT: got message from child", data)
-      pendingRequests[data.requestId](data.data)
-      delete pendingRequests[data.requestId]
+      if (event.source !== frame.contentWindow) return
+      pendingRequests[e.data.requestId](e.data.data)
+      delete pendingRequests[e.data.requestId]
     })
+    for (const req of preDomReqs) {
+      frame.contentWindow.postMessage(req)
+    }
   })
 
   let requestIdCtr = 0
   let pendingRequests = {}
+  let preDomReqs = []
 
   return function(url) {
     const requestId = requestIdCtr
@@ -34,10 +27,15 @@ const nfetch = (function () {
     const promise = new Promise((res) => {
       pendingRequests[requestId] = res
     })
-    frame.contentWindow.postMessage({
+    const reqData = {
       requestId,
       url
-    })
+    }
+    if (frame.contentWindow) {
+      frame.contentWindow.postMessage(reqData)
+    } else {
+      preDomReqs.append(reqData)
+    }
     return promise
   }
 })()

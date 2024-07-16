@@ -3,7 +3,5 @@
   content="upgrade-insecure-requests; default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src 'self' blob:; form-action 'self'; img-src * data:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; font-src * data:; object-src *; media-src *; frame-src *;" />
 <script src="/neocities-fetch/fetch.js"></script>
 <script>
-  addEventListener("DOMContentLoaded", () => {
-    nfetch("https://api.github.com/repos/neocities/neocities/git/trees/master").then(a => console.log(a))
-  })
+nfetch("https://api.github.com/repos/neocities/neocities/git/trees/master").then(a => console.log(a))
 </script>

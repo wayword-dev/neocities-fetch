@@ -1,16 +1,10 @@
 <script>
-window.addEventListener(
-  "message",
-  async (event) => {
-    // console.log("CHILD: GOT MSG FROM PARENT", event)
-    // console.log("CHILD: parent", window.parent.location.toString(), "source", event.source.location.toString(), "eq", window.parent.location.toString() === event.source.location.toString(), window.parent === event.source)
-    if (event.source !== window.parent) return // console.log("CHILD: Ignoring")
-    const data = event.data
-    console.log("CHILD: Got message from parent", data)
-    const resp = await fetch(data.url).then(r => r.text())
+window.addEventListener("message", async e => {
+    if (e.source !== window.parent) return
+    const resp = await fetch(e.data.url).then(r => r.text())
     window.parent.postMessage({
-      requestId: data.requestId,
-      data: resp
+      requestId: e.data.requestId,
+      e.data: resp
     })
   },
   false,
