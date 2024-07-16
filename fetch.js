@@ -5,8 +5,8 @@ const nfetch = (function () {
     if (event.source !== frame.contentWindow) return
     if (event.data.ready) {
       ready = true
-      for (const req of preDomReqs) {
-        frame.contentWindow.postMessage(req)
+      while (preDomReqs.length > 0) {
+        frame.contentWindow.postMessage(preDomReqs.pop())
       }
     } else {
       pendingRequests[e.data.requestId](e.data.data)
