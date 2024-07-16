@@ -14,7 +14,8 @@
       i += 1
     }, 3000)
     window.addEventListener("message", (e) => {
-      if (event.srcElement !== frame) return console.log("PARENT: ignroing")
+      console.log("PARENT:", e)
+      if (event.srcElement !== frame) return console.log("PARENT: ignroing", event.srcElement, frame)
       console.log("PARENT: got message from child", e)
     })
   })
