@@ -6,7 +6,7 @@ const nfetch = (function () {
   frame.style.height = "0"
   frame.style.border = "0"
   frame.src = "https://wayword-dev.github.io/neocities-fetch/frame.html"
-  function setup() {}
+  function setup() {
     document.body.appendChild(frame)
     window.addEventListener("message", (e) => {
       if (event.source !== frame.contentWindow) return
