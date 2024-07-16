@@ -8,7 +8,11 @@
   addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(frame)
     console.log("PARENT: sending message")
-    frame.contentWindow.postMessage("MESSAGE FROM PARENT")
+    let i = 0;
+    setInterval(() => {
+      frame.contentWindow.postMessage(`MESSAGE FROM PARENT ${i}`)
+      i += 1
+    }, 3000)
     window.addEventListener("message", (e) => {
       if (window.srcElement !== frame) return console.log("PARENT: ignroing")
       console.log("PARENT: got message from child", e)
