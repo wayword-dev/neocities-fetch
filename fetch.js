@@ -10,6 +10,7 @@
     document.body.appendChild(frame)
     frame.contentWindow.postMessage("MESSAGE FROM PARENT")
     window.addEventListener("message", (e) => {
+      if (window.srcElement !== frame) return
       console.log("PARENT: got message from child", e)
     })
   })
