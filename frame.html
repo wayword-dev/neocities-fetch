@@ -5,7 +5,7 @@ window.addEventListener(
     // console.log("CHILD: GOT MSG FROM PARENT", event)
     // console.log("CHILD: parent", window.parent.location.toString(), "source", event.source.location.toString(), "eq", window.parent.location.toString() === event.source.location.toString(), window.parent === event.source)
     if (event.source !== window.parent) return // console.log("CHILD: Ignoring")
-    const data = JSON.parse(event.data)
+    const data = event.data
     console.log("CHILD: Got message from parent", data)
     const resp = await fetch(data.url).then(r => r.text())
     window.parent.postMessage({

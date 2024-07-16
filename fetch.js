@@ -18,7 +18,7 @@ const nfetch = (function () {
       // console.log("PARENT:", e)
       if (event.source !== frame.contentWindow) return // console.log("PARENT: ignroing", event.source, frame.contentWindow)
       console.log("PARENT:", e)
-      const data = JSON.parse(e.data)
+      const data = e.data
       console.log("PARENT: got message from child", data)
       pendingRequests[data.requestId](data.data)
       delete pendingRequests[data.requestId]
@@ -34,10 +34,10 @@ const nfetch = (function () {
     const promise = new Promise((res) => {
       pendingRequests[requestId] = res
     })
-    frame.contentWindow.postMessage(JSON.stringify({
+    frame.contentWindow.postMessage({
       requestId,
       url
-    }))
+    })
     return promise
   }
 })()
