@@ -34,7 +34,7 @@ const nfetch = (function () {
     if (frame.contentWindow) {
       frame.contentWindow.postMessage(reqData)
     } else {
-      preDomReqs.append(reqData)
+      preDomReqs.push(reqData)
     }
     return promise
   }

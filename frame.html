@@ -4,7 +4,7 @@ window.addEventListener("message", async e => {
     const resp = await fetch(e.data.url).then(r => r.text())
     window.parent.postMessage({
       requestId: e.data.requestId,
-      e.data: resp
+      data: resp
     })
   },
   false,
