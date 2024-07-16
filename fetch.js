@@ -17,6 +17,7 @@ const nfetch = (function () {
     window.addEventListener("message", (e) => {
       // console.log("PARENT:", e)
       if (event.source !== frame.contentWindow) return // console.log("PARENT: ignroing", event.source, frame.contentWindow)
+      console.log("PARENT:", e)
       const data = JSON.parse(e.data)
       console.log("PARENT: got message from child", data)
       pendingRequests[data.requestId](data.data)
