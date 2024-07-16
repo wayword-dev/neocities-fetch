@@ -5,7 +5,7 @@ const nfetch = (function () {
     if (event.data.ready) {
       ready = true
       while (preDomReqs.length > 0) {
-        frame.contentWindow.postMessage(preDomReqs.pop())
+        frame.contentWindow.postMessage(preDomReqs.pop(), "*")
       }
     } else {
       pendingRequests[e.data.requestId](e.data.data)
@@ -43,7 +43,7 @@ const nfetch = (function () {
       url
     }
     if (ready) {
-      frame.contentWindow.postMessage(reqData)
+      frame.contentWindow.postMessage(reqData, "*")
     } else {
       preDomReqs.push(reqData)
     }

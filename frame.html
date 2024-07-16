@@ -5,9 +5,8 @@ window.addEventListener("message", async e => {
     window.parent.postMessage({
       requestId: e.data.requestId,
       data: resp
-    })
-  },
-  false,
+    }, "*")
+  }
 );
-window.parent.postMessage({ready: "true"})
+window.parent.postMessage({ready: "true"}, "*")
 </script>
