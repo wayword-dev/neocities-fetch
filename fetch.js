@@ -13,11 +13,9 @@ const nfetch = (function () {
       if (event.data.ready) {
         ready = true
         for (const req of preDomReqs) {
-          console.log("nfetch dequeued")
           frame.contentWindow.postMessage(req)
         }
       } else {
-        console.log("nfetch data recieved, promise resolving")
         pendingRequests[e.data.requestId](e.data.data)
         delete pendingRequests[e.data.requestId]
       }
@@ -29,7 +27,6 @@ const nfetch = (function () {
   let preDomReqs = []
 
   return function(url) {
-    console.log("nfetch called")
     const requestId = requestIdCtr
     requestIdCtr += 1
     const promise = new Promise((res) => {
@@ -40,10 +37,8 @@ const nfetch = (function () {
       url
     }
     if (ready) {
-      console.log("nfetch sent to content window")
       frame.contentWindow.postMessage(reqData)
     } else {
-      console.log("nfetch queued")
       preDomReqs.push(reqData)
     }
     return promise

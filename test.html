@@ -4,5 +4,7 @@
 <script src="/neocities-fetch/fetch.js"></script>
 <script>
 console.log("Making nfetch")
-nfetch("https://api.github.com/repos/neocities/neocities/git/trees/master").then(a => console.log(a))
+nfetch("https://api.github.com/repos/neocities/neocities/git/trees/master").then(a => console.log(JSON.parse(a)))
+console.log("Making regular fetch")
+fetch("https://api.github.com/repos/neocities/neocities/git/trees/master").then(a => a.json()).then(a => console.log(a))
 </script>
