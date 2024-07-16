@@ -9,5 +9,6 @@ window.addEventListener("message", async e => {
   },
   false,
 );
+console.log("sending ready message")
 window.parent.postMessage({ready: "true"})
 </script>
