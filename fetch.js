@@ -13,6 +13,7 @@ const nfetch = (function () {
       delete pendingRequests[e.data.requestId]
     })
     for (const req of preDomReqs) {
+      console.log("nfetch dequeued")
       frame.contentWindow.postMessage(req)
     }
   })
@@ -22,6 +23,7 @@ const nfetch = (function () {
   let preDomReqs = []
 
   return function(url) {
+    console.log("nfetch called")
     const requestId = requestIdCtr
     requestIdCtr += 1
     const promise = new Promise((res) => {
@@ -32,8 +34,10 @@ const nfetch = (function () {
       url
     }
     if (frame.contentWindow) {
+      console.log("nfetch sent to content window")
       frame.contentWindow.postMessage(reqData)
     } else {
+      console.log("nfetch queued")
       preDomReqs.push(reqData)
     }
     return promise
