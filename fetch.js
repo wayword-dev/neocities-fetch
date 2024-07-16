@@ -1,4 +1,4 @@
-const nfetch = (function () { */
+const nfetch = (function () {
   const frame = document.createElement("iframe")
   frame.style.position = "absolute"
   frame.style.width = "0"
