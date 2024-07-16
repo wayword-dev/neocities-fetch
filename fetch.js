@@ -9,7 +9,7 @@
   addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(frame)
     frame.contentWindow.postMessage("MESSAGE FROM PARENT")
-    frame.contentWindow.addEventListener("message", (e) => {
+    window.addEventListener("message", (e) => {
       console.log("PARENT: got message from child", e)
     })
   })
