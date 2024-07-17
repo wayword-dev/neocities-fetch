@@ -1,10 +1,15 @@
 <script>
 window.addEventListener("message", async e => {
     if (e.source !== window.parent) return
-    const resp = await fetch(e.data.url).then(r => r.text())
+    const resp = await fetch(...e.data.args)
     window.parent.postMessage({
       requestId: e.data.requestId,
-      data: resp
+      data: {
+        body: await resp.text(),
+        status: resp.status,
+        statusText: resp.statusText,
+        headers: Object.fromEntries(resp.headers.entries())
+      }
     }, "*")
   }
 );

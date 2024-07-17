@@ -8,7 +8,9 @@ const nfetch = (function () {
         frame.contentWindow.postMessage(preDomReqs.pop(), "*")
       }
     } else {
-      pendingRequests[e.data.requestId](e.data.data)
+      const data = e.data.data
+      const resp = new Response(data.body, {status: data.status, statusText: data.statusText, headers: data.headers})
+      pendingRequests[e.data.requestId](resp)
       delete pendingRequests[e.data.requestId]
     }
   })
@@ -32,7 +34,7 @@ const nfetch = (function () {
   let pendingRequests = {}
   let preDomReqs = []
 
-  return function(url) {
+  return function(...args) {
     const requestId = requestIdCtr
     requestIdCtr += 1
     const promise = new Promise((res) => {
@@ -40,7 +42,7 @@ const nfetch = (function () {
     })
     const reqData = {
       requestId,
-      url
+      args
     }
     if (ready) {
       frame.contentWindow.postMessage(reqData, "*")
